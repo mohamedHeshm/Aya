@@ -541,18 +541,28 @@
      START CELEBRATION
   ========================================================= */
   $('#startBtn').addEventListener('click', () => {
+    // Cinematic hand-off: the glow blooms outward and the screen breathes
+    // to black for a beat before the story opens, instead of an instant
+    // cut from the start overlay to the main content.
+    const cineTransition = $('#startTransition');
+    cineTransition.classList.add('run');
     $('#startOverlay').classList.add('hide');
-    $('#mainContent').hidden = false;
-    resizeAll();
-    drawStars(); drawNebula(); drawParticles(); drawSparkles(); confettiLoop(); fireworksLoop(); drawShootingStars();
-    startMusic();
-    burstConfetti(IS_MOBILE ? 60 : 120);
-    // Stagger the fireworks show and balloons by a beat so the confetti
-    // burst + 7 canvas loops starting up don't all hit the main thread
-    // on the exact same frame (this was causing the mobile freeze).
-    setTimeout(() => startFireworksShow(3000), 250);
-    startFloatingQuoteCycle();
-    setTimeout(() => startBalloons(), 600);
+
+    setTimeout(() => {
+      $('#mainContent').hidden = false;
+      resizeAll();
+      drawStars(); drawNebula(); drawParticles(); drawSparkles(); confettiLoop(); fireworksLoop(); drawShootingStars();
+      startMusic();
+      burstConfetti(IS_MOBILE ? 60 : 120);
+      // Stagger the fireworks show and balloons by a beat so the confetti
+      // burst + 7 canvas loops starting up don't all hit the main thread
+      // on the exact same frame (this was causing the mobile freeze).
+      setTimeout(() => startFireworksShow(3000), 250);
+      startFloatingQuoteCycle();
+      setTimeout(() => startBalloons(), 600);
+    }, 420);
+
+    setTimeout(() => cineTransition.classList.remove('run'), 1300);
   }, { once: true });
 
   /* =========================================================
@@ -718,9 +728,12 @@
      REASONS WE LOVE YOU — FLIP CARDS
   ========================================================= */
   const flipGrid = $('#flipGrid');
-  CONFIG.reasons.forEach((r) => {
+  CONFIG.reasons.forEach((r, i) => {
     const card = document.createElement('div');
-    card.className = 'flip-card';
+    // Each reason drifts in from its own direction (alternating left/right,
+    // slight up/down offset) via the dir-N classes below, instead of every
+    // card doing the same fade-up — a small, deliberate variation per spec.
+    card.className = `flip-card reveal dir-${i % 4}`;
     card.innerHTML = `
       <div class="flip-inner">
         <div class="flip-front"><div class="flip-icon">${r.icon}</div><span>اضغطي لتكتشفي</span></div>

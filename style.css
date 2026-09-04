@@ -1,11 +1,16 @@
 /* ===================== ROOT / THEME ===================== */
 :root{
-  --bg-dark:#0a0a1f;
-  --bg-dark2:#12081f;
-  --neon-blue:#3ee8ff;
-  --neon-purple:#a855f7;
-  --neon-pink:#ff5fc4;
-  --gold:#ffd479;
+  /* Deepened, slightly more luxury/cosmic base per art direction pass —
+     same roles as before (bg / accents / gold) so every existing var()
+     reference below still resolves correctly, nothing renamed. */
+  --bg-dark:#050516;
+  --bg-dark2:#0B0824;
+  --bg-dark3:#151035;
+  --neon-blue:#22D3EE;
+  --neon-purple:#A855F7;
+  --neon-pink:#EC4899;
+  --gold:#F5C76A;
+  --violet:#6C4DFF;
   --text:#f3f0ff;
   --glass-bg:rgba(255,255,255,0.06);
   --glass-border:rgba(255,255,255,0.14);
@@ -122,13 +127,18 @@ a{color:inherit; text-decoration:none;}
 }
 .intro-welcome{color:#c9c3e6; font-size:1.1rem; margin-bottom:36px;}
 .btn-start{
-  padding:18px 42px; font-size:1.1rem; font-weight:600; color:#0a0a1f; border-radius:60px;
-  background:linear-gradient(135deg,var(--gold),var(--neon-pink));
-  box-shadow:0 0 25px rgba(255,212,121,.6), 0 0 60px rgba(255,95,196,.4);
+  position:relative; padding:18px 42px; font-size:1.1rem; font-weight:700; color:#fff8ea; border-radius:60px;
+  background:
+    linear-gradient(rgba(15,10,35,.55), rgba(15,10,35,.55)) padding-box,
+    linear-gradient(135deg,var(--gold),var(--neon-pink),var(--neon-purple)) border-box;
+  border:1.5px solid transparent;
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 0 25px rgba(255,212,121,.5), 0 0 60px rgba(255,95,196,.32);
   transition:transform var(--transition-fast), box-shadow var(--transition-fast);
   animation:pulseBtn 2.4s ease-in-out infinite;
 }
 .btn-start:hover{transform:translateY(-4px) scale(1.05);}
+.btn-start:active{transform:translateY(-2px) scale(1.02);}
 @keyframes pulseBtn{0%,100%{box-shadow:0 0 25px rgba(255,212,121,.6),0 0 60px rgba(255,95,196,.4);}50%{box-shadow:0 0 40px rgba(255,212,121,.9),0 0 90px rgba(255,95,196,.7);}}
 
 /* ===================== MUSIC / ICON CONTROLS ===================== */
@@ -172,14 +182,29 @@ a{color:inherit; text-decoration:none;}
 .hero-name{font-family:var(--font-hand); font-size:clamp(2rem,6vw,3.2rem); color:var(--gold); text-shadow:0 0 20px var(--gold); margin:10px 0;}
 .hero-sub{color:#c9c3e6; margin-bottom:40px; font-size:1.1rem;}
 .btn-glow{
-  display:inline-block; padding:16px 36px; border-radius:50px; font-weight:600;
-  background:var(--glass-bg); border:1px solid var(--glass-border); color:var(--text);
+  position:relative; display:inline-block; padding:16px 36px; border-radius:50px; font-weight:600;
+  background:
+    linear-gradient(var(--bg-dark2), var(--bg-dark2)) padding-box,
+    linear-gradient(120deg, var(--neon-blue), var(--neon-purple), var(--neon-pink)) border-box;
+  border:1px solid transparent; color:var(--text);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
   box-shadow:0 0 20px rgba(62,232,255,.35);
   transition:transform var(--transition-fast), box-shadow var(--transition-fast);
+  overflow:hidden;
 }
 .btn-glow:hover{transform:translateY(-4px); box-shadow:0 0 35px rgba(62,232,255,.7);}
-.btn-glow.gold{box-shadow:0 0 20px rgba(255,212,121,.4); margin-top:40px;}
+.btn-glow.gold{
+  background:
+    linear-gradient(var(--bg-dark2), var(--bg-dark2)) padding-box,
+    linear-gradient(120deg, var(--gold), var(--neon-pink)) border-box;
+  box-shadow:0 0 20px rgba(255,212,121,.4); margin-top:40px;
+}
 .btn-glow.gold:hover{box-shadow:0 0 40px rgba(255,212,121,.8);}
+[data-theme="light"] .btn-glow{
+  background:
+    linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
+    linear-gradient(120deg, var(--neon-blue), var(--neon-purple), var(--neon-pink)) border-box;
+}
 
 /* COUNTDOWN */
 .countdown-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:18px; width:100%; max-width:900px;}
@@ -329,6 +354,14 @@ a{color:inherit; text-decoration:none;}
 .reveal{opacity:0; transform:translateY(40px); transition:opacity .8s ease, transform .8s ease;}
 .reveal.visible{opacity:1; transform:translateY(0);}
 
+/* Reason cards: each enters from its own direction, quiet and brief */
+.flip-card.reveal{transition:opacity .75s ease, transform .75s cubic-bezier(.4,0,.2,1);}
+.flip-card.reveal.dir-0{transform:translate(-32px,18px);}
+.flip-card.reveal.dir-1{transform:translate(32px,18px);}
+.flip-card.reveal.dir-2{transform:translate(-24px,-22px);}
+.flip-card.reveal.dir-3{transform:translate(24px,-22px);}
+.flip-card.reveal.visible{transform:translate(0,0);}
+
 /* Reduced motion */
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
@@ -353,6 +386,42 @@ a{color:inherit; text-decoration:none;}
 /* NEBULA / SHOOTING STAR CANVAS LAYERS */
 #nebulaCanvas{z-index:1; mix-blend-mode:screen;}
 #shootingStarCanvas{z-index:4; pointer-events:none;}
+
+/* ===================== CINEMATIC START TRANSITION ===================== */
+/* One deliberate, orchestrated moment when the journey begins: the glow
+   blooms outward and the screen breathes to black before the story opens.
+   Purely additive — sits above everything, is inert (display:none) until
+   JS toggles .run, and never blocks input once it has finished. */
+#startTransition{
+  position:fixed; inset:0; z-index:8500; pointer-events:none;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; background:#04030c;
+}
+#startTransition::before{
+  content:''; position:absolute; width:40px; height:40px; border-radius:50%;
+  background:radial-gradient(circle, rgba(245,199,106,.9), rgba(168,85,247,.55) 45%, transparent 72%);
+  filter:blur(2px);
+}
+#startTransition.run{
+  animation:cineTransitionBloom 1.15s cubic-bezier(.4,0,.2,1) forwards;
+}
+#startTransition.run::before{
+  animation:cineTransitionGlow 1.15s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes cineTransitionGlow{
+  0%{transform:scale(1); opacity:.9;}
+  55%{transform:scale(22); opacity:1;}
+  100%{transform:scale(34); opacity:0;}
+}
+@keyframes cineTransitionBloom{
+  0%{opacity:0;}
+  35%{opacity:1;}
+  75%{opacity:1;}
+  100%{opacity:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  #startTransition.run, #startTransition.run::before{animation:none; opacity:0;}
+}
 
 /* CINEMATIC INTRO */
 .cinematic-intro{
