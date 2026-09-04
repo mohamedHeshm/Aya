@@ -480,13 +480,13 @@
   window.addEventListener('resize', resizeAll);
 
   /* =========================================================
-     MUSIC — local audio file (music.mp3)
+     MUSIC — local audio file (musicaya.mpeg)
   ========================================================= */
   const audioEl = $('#bgMusic');
   let audioCtx = null;
   let musicPlaying = false;
 
-  audioEl.src = 'music.mp3';
+  audioEl.src = 'musicaya.mpeg';
   audioEl.loop = true;
   audioEl.preload = 'auto';
   // Keep the existing experience: try playback immediately, then retry after
@@ -526,7 +526,7 @@
   audioEl.addEventListener('pause', () => setMusicUi(false));
   audioEl.addEventListener('error', () => {
     setMusicUi(false);
-    console.error('Could not load music.mp3');
+    console.error('Could not load musicaya.mpeg');
   });
 
   $('#playPauseBtn').addEventListener('click', () => {
