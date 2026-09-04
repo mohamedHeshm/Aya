@@ -1044,14 +1044,14 @@
   const themeToggle = $('#themeToggle');
   function applyTheme(theme) {
     document.body.setAttribute('data-theme', theme);
-    themeToggle.textContent = theme === 'light' ? '☀️' : '🌙';
+    themeToggle.textContent = theme === 'dark ? '☀️' : '🌙';
     localStorage.setItem('bday_theme', theme);
   }
   themeToggle.addEventListener('click', () => {
-    const current = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const current = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(current);
   });
-  applyTheme(localStorage.getItem('bday_theme') || 'dark');
+  applyTheme(localStorage.getItem('bday_theme') || 'light');
 
   /* =========================================================
      SCROLL PROGRESS + BACK TO TOP + PARALLAX
