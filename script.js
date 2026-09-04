@@ -1044,7 +1044,7 @@
   const themeToggle = $('#themeToggle');
   function applyTheme(theme) {
     document.body.setAttribute('data-theme', theme);
-    themeToggle.textContent = theme === 'dark ? '☀️' : '🌙';
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
     localStorage.setItem('bday_theme', theme);
   }
   themeToggle.addEventListener('click', () => {
