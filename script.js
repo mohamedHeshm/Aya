@@ -12,7 +12,7 @@
   /* ---------------- CONFIG ---------------- */
   const CONFIG = {
     name: 'ايه',
-    birthDate: '2008-08-05T00:00:00',// تاريخ الميلادض
+    birthDate: '2006-09-11T00:00:00',// تاريخ الميلادض
     galleryImages: [
       { src: 'aya1.jpeg', cap: 'لحظة لا تُنسى' },
       { src: 'aya2.jpeg', cap: 'ابتسامة تُخلّد' },
@@ -904,8 +904,8 @@
     cakeClickCount++;
     if (cakeClickCount >= 5) { unlockSecretMode(); cakeClickCount = 0; }
   });
-  const secretSeq = ['ج', 'ن', 'ى'];
-  const secretSeqAlt = ['J', 'a', 'n', 'a']; // fallback for English keyboards
+  const secretSeq = ['ا', 'ي', 'ه'];
+  const secretSeqAlt = ['A', 'y', 'a']; // fallback for English keyboards
   let secretBuffer = [];
   document.addEventListener('keydown', (e) => {
     secretBuffer.push(e.key.toLowerCase());
